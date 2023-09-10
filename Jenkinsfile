@@ -21,23 +21,12 @@ pipeline {
             }
         }
 
-        stage('Autenticando no Azure') {
-            environment {
-                AZURE_SERVICE_PRINCIPAL_NAME = credentials("AZURE_SERVICE_PRINCIPAL_NAME")
-                AZURE_SECRET = credentials("AZURE_SECRET")
-                AZURE_TENANT = credentials("AZURE_TENANT")
-            }
+        stage('Deploy do Azure Container Apps') {
             steps {
-                sh("az login --service-principal -u $AZURE_SERVICE_PRINCIPAL_NAME -p $AZURE_SECRET --tenant $AZURE_TENANT")
-            }
-        }
-        
-        stage('Deploy Azure Container Apps') {
-            environment {
-                tag_version = "${env.BUILD_ID}"
-            }
-            steps {
-                sh("az containerapp update --name live-pipe --resource-group live-pipe --image fabricioveronez/page-labs:${env.BUILD_ID}")
+                withCredentials([azureServicePrincipal('azure_cred')]) {
+                    sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+                    sh 'az containerapp update --name live-pipe --resource-group live-pipe --image fabricioveronez/page-labs:${env.BUILD_ID}'
+                }
             }
         }
     }
