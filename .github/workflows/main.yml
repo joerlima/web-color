@@ -24,7 +24,7 @@ jobs:
           file: ./src/Dockerfile
           push: true
           tags: |
-            fabricioveronez/live-color:blue
+            fabricioveronez/live-color:${{ github.run_number }}
             fabricioveronez/live-color:blue
 
   CD:
@@ -32,6 +32,16 @@ jobs:
     needs: [CI]
 
     steps:
-      - uses: actions/checkout@v3.1.0 
-      - name: Deploy no Azure Container Apps
-        run: echo "Deploy no ACA"
+      - uses: actions/checkout@v3.1.0
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}      
+      
+      - name: Build and deploy Container App
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          imageToDeploy: fabricioveronez/live-color:${{ github.run_number }}
+          containerAppName: live-pipe
+          resourceGroup: live-pipe
+
