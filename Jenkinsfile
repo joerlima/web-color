@@ -23,9 +23,11 @@ pipeline {
 
         stage('Deploy do Azure Container Apps') {
             steps {
-                withCredentials([azureServicePrincipal('azure_cred')]) {
-                    sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
-                    sh 'az containerapp update --name live-pipe --resource-group live-pipe --image fabricioveronez/page-labs:${env.BUILD_ID}'
+                script {
+                    withCredentials([azureServicePrincipal('azure_cred')]) {
+                        sh 'az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET -t $AZURE_TENANT_ID'
+                        sh 'az containerapp update --name live-pipe --resource-group live-pipe --image fabricioveronez/page-labs:${env.BUILD_ID}'
+                    }
                 }
             }
         }
