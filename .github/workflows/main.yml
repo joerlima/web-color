@@ -43,7 +43,7 @@ jobs:
         uses: azure/container-apps-deploy-action@v1
         with:
           imageToDeploy: fabricioveronez/live-color:${{ github.run_number }}
-          containerAppName: live-live
-          resourceGroup: live-live
+          containerAppName: live-aca
+          resourceGroup: live-aca
 
 
