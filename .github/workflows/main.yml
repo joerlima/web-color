@@ -27,7 +27,6 @@ jobs:
           push: true
           tags: |
             fabricioveronez/live-color:${{ github.run_number }}
-            fabricioveronez/live-color:blue
 
   CD:
     runs-on: ubuntu-latest
