@@ -30,7 +30,7 @@ jobs:
         file: ./src/Dockerfile
         push: true
         tags: |
-          fabricioveronez/live-color:v1
+          fabricioveronez/live-color:${{ github.run_number }}
           fabricioveronez/live-color:latest
         
 
