@@ -42,7 +42,11 @@ jobs:
       with:
         # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-
+    - name: Azure Container Apps Build and Deploy
+      uses: Azure/container-apps-deploy-action@v1
+      with:
+        imageToDeploy: fabricioveronez/live-color:${{ github.run_number }}
+        containerAppName: live-aca
+        resourceGroup: live
 
       
