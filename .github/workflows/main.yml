@@ -32,4 +32,9 @@ jobs:
         tags: |
           joerlima/live-color:${{ github.run_number }}
           joerlima/live-color:latest
-      
+  
+  CD:
+   runs-on: ubuntu-latest
+   steps:
+   - run: echo "Pipeline CD"
+   
