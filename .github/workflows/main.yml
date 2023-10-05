@@ -30,6 +30,6 @@ jobs:
         file: ./src/Dockerfile
         push: true
         tags: |
-          joerlima/live-color:v1
+          joerlima/live-color:${{ github.run_number }}
           joerlima/live-color:latest
       
